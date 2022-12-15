@@ -111,3 +111,7 @@ fetch("/control/meta").then((r) => r.json()).then((d) => {
 
     }
 })
+
+fetch("/control/user").then((r) => r.text()).then((d) => {
+    document.getElementById("user").innerText = `MCR User: ${d}`;
+})
