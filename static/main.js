@@ -80,6 +80,34 @@ document.getElementById("undo-button").onclick = () => {
 
     document.getElementById("undo-connections").innerHTML = "";
     undoConnections = {};
-
-
 }
+
+let metadataGroups = [];
+
+fetch("/control/meta").then((r) => r.json()).then((d) => {
+    metadataGroups = d;
+    for (let i = 0; i < 16; i++) {
+        let grpBtn = document.getElementById(`metagrp-${i + 1}`);
+        grpBtn.innerText = metadataGroups[i].GrpName;
+
+        if (metadataGroups[i].GrpName == "") {
+            grpBtn.style.visibility = "hidden";
+            continue;
+        }
+
+        grpBtn.onclick = () => {
+            for (let j = 0; j < 16; j++) {
+                document.getElementById(`metabtn-${j + 1}`).innerText = metadataGroups[i].Members[j].ShortName;
+                document.getElementById(`metabtn-${j + 1}`).style.visibility = metadataGroups[i].Members[j].ShortName == "" ? "hidden" : "visible";
+            }
+            Array.from(document.getElementsByClassName("button-meta-source")).forEach((b) => {
+                b.style.border = "";
+            })
+            Array.from(document.getElementsByClassName("button-meta-group")).forEach((b) => {
+                b.style.border = "";
+            })
+            grpBtn.style.border = "5px solid red";
+        }
+
+    }
+})
