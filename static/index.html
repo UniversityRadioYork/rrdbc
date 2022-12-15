@@ -7,7 +7,7 @@
 
 <body>
     <div id="header">
-        <h3 class="title-text" id="status">Status</h3>
+        <h3 class="title-text" id="status"></h3>
         <h3 class="title-text" id="clock">13:50:00</h3>
     </div>
     <div id="cols">
@@ -16,66 +16,26 @@
             <table>
                 <tr>
                     <td class="button-td">
-                        <button class="button-audio-source">INT1</button>
+                        <button class="button-source button-audio-source audio-source-int-ext">INT1</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-audio-source">INT2</button>
+                        <button class="button-source button-audio-source audio-source-int-ext">INT2</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-audio-source">INT3</button>
+                        <button class="button-source button-audio-source audio-source-int-ext">INT3</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-audio-source">INT4</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="button-td">
-                        <button class="button-audio-source">CONT</button>
-                    </td>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                    <td class="button-td">
-                        <button class="button-audio-source">OFFA</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                </tr>
-                <tr>
-                    <td class="button-td">
-                        <button class="button-audio-source">EXT1</button>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-source">EXT2</button>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-source">EXT3</button>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-source">EXT4</button>
+                        <button class="button-source button-audio-source audio-source-int-ext">INT4</button>
                     </td>
                 </tr>
                 <tr>
                     <td class="button-td">
-                        <button class="button-audio-source">PRES</button>
+                        <button class="button-source button-audio-source audio-source-int-ext">CONT</button>
                     </td>
-                    <td class="button-td">
-                        <button class="button-audio-source">STUD</button>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-source">SUST</button>
-                    </td>
-                    <td class="button-td"></td>
-                </tr>
-                <tr>
-                    <td class="button-td"></td>
                     <td class="button-td"></td>
                     <td class="button-td"></td>
                     <td class="button-td">
-                        <button class="button-audio-source">STOP</button>
+                        <button class="button-source button-audio-source audio-source-int-ext">OFFA</button>
                     </td>
                 </tr>
                 <tr>
@@ -86,58 +46,98 @@
                 </tr>
                 <tr>
                     <td class="button-td">
-                        <button class="button-meta-source">META1</button>
+                        <button class="button-source button-audio-source audio-source-ext-main">EXT1</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-source">META2</button>
+                        <button class="button-source button-audio-source audio-source-ext-main">EXT2</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-source">META3</button>
+                        <button class="button-source button-audio-source audio-source-ext-main">EXT3</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-source">META4</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="button-td">
-                        <button class="button-meta-source">META1</button>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-meta-source">META2</button>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-meta-source">META3</button>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-meta-source">META4</button>
+                        <button class="button-source button-audio-source audio-source-ext-main">EXT4</button>
                     </td>
                 </tr>
                 <tr>
                     <td class="button-td">
-                        <button class="button-meta-source">META1</button>
+                        <button class="button-source button-audio-source audio-source-ext-main">PRES</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-source">META2</button>
+                        <button class="button-source button-audio-source audio-source-ext-main">STUD</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-source">META3</button>
+                        <button class="button-source button-audio-source audio-source-ext-main">SUST</button>
+                    </td>
+                    <td class="button-td"></td>
+                </tr>
+                <tr>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-ext-main">STOP</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META1</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-source">META4</button>
+                        <button class="button-source button-meta-source">META2</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META3</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META4</button>
                     </td>
                 </tr>
                 <tr>
                     <td class="button-td">
-                        <button class="button-meta-source">META1</button>
+                        <button class="button-source button-meta-source">META1</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-source">META2</button>
+                        <button class="button-source button-meta-source">META2</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-source">META3</button>
+                        <button class="button-source button-meta-source">META3</button>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-source">META4</button>
+                        <button class="button-source button-meta-source">META4</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META1</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META2</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META3</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META4</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META1</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META2</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META3</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source">META4</button>
                     </td>
                 </tr>
                 <tr>
@@ -205,87 +205,29 @@
             </table>
         </div>
         <div id="take-buttons">
-            <button class="button-take">TAKE</button>
-            <button class="button-take">UNDO</button>
+            <button class="button-take" id="take-button">TAKE</button>
+            <ul id="connections" class="connections-list"></ul>
+            <button class="button-take" id="undo-button">UNDO</button>
+            <ul id="undo-connections" class="connections-list"></ul>
         </div>
         <div>
             <h4 class="title-text">Destinations</h4>
             <table>
                 <tr>
                     <td class="button-td">
-                        <button class="button-audio-dest">EXT1</button>
+                        <button class="button-audio-dest button-dest audio-dest-int-ext">EXT1</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-audio-dest">EXT2</button>
+                        <button class="button-audio-dest button-dest audio-dest-int-ext">EXT2</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-audio-dest">EXT3</button>
+                        <button class="button-audio-dest button-dest audio-dest-int-ext">EXT3</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-audio-dest">EXT4</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                </tr>
-                <tr>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                </tr>
-                <tr>
-                    <td class="button-td">
-                        <button class="button-audio-dest">PRIM</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-dest">SECO</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                    <td class="button-td"></td>
-                    <td class="button-td"></td>
-                </tr>
-                <tr>
-                    <td class="button-td">
-                        <button class="button-audio-dest">RECA</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-dest">RECB</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-dest">RECC</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-dest">RECD</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="button-td">
-                        <button class="button-audio-dest">RECE</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-dest">RECF</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-dest">RECG</button>
-                        <p class="dest-link">OFFA</p>
-                    </td>
-                    <td class="button-td">
-                        <button class="button-audio-dest">RECH</button>
+                        <button class="button-audio-dest button-dest audio-dest-int-ext">EXT4</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                 </tr>
@@ -296,26 +238,86 @@
                     <td class="button-td"></td>
                 </tr>
                 <tr>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                </tr>
+                <tr>
                     <td class="button-td">
-                        <button class="button-meta-dest">EXT1 META</button>
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">PRIM</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-dest">EXT2 META</button>
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">SECO</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">RECA</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-dest">EXT3 META</button>
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">RECB</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-dest">EXT4 META</button>
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">RECC</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">RECD</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                 </tr>
                 <tr>
                     <td class="button-td">
-                        <button class="button-meta-dest">MAIN META</button>
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">RECE</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">RECF</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">RECG</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-audio-dest button-dest audio-dest-ext-main">RECH</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-meta-dest button-dest">EXT1 META</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-dest button-dest">EXT2 META</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-dest button-dest">EXT3 META</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-dest button-dest">EXT4 META</button>
+                        <p class="dest-link">OFFA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-meta-dest button-dest">MAIN META</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td"></td>
@@ -324,37 +326,37 @@
                 </tr>
                 <tr>
                     <td class="button-td">
-                        <button class="button-meta-dest">RECA META</button>
+                        <button class="button-meta-dest button-dest">RECA META</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-dest">RECB META</button>
+                        <button class="button-meta-dest button-dest">RECB META</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-dest">RECC META</button>
+                        <button class="button-meta-dest button-dest">RECC META</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-dest">RECD META</button>
+                        <button class="button-meta-dest button-dest">RECD META</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                 </tr>
                 <tr>
                     <td class="button-td">
-                        <button class="button-meta-dest">RECE META</button>
+                        <button class="button-meta-dest button-dest">RECE META</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-dest">RECF META</button>
+                        <button class="button-meta-dest button-dest">RECF META</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-dest">RECG META</button>
+                        <button class="button-meta-dest button-dest">RECG META</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                     <td class="button-td">
-                        <button class="button-meta-dest">RECH META</button>
+                        <button class="button-meta-dest button-dest">RECH META</button>
                         <p class="dest-link">OFFA</p>
                     </td>
                 </tr>
