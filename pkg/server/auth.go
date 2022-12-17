@@ -1,10 +1,10 @@
-package web
+package server
 
 import (
 	"net/http"
 )
 
-type AuthHandler struct {
+type authHandler struct {
 	Next          http.Handler
 	AdminRequired bool
 	Users         map[string]struct {
@@ -18,7 +18,7 @@ func authFail(w http.ResponseWriter) {
 	http.Error(w, "Unauthorised", http.StatusUnauthorized)
 }
 
-func (a *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (a *authHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	u, p, ok := r.BasicAuth()
 	if !ok {

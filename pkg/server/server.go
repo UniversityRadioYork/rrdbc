@@ -1,4 +1,4 @@
-package web
+package server
 
 import (
 	"encoding/json"
@@ -24,13 +24,13 @@ type Server struct {
 func (s *Server) Start() {
 
 	http.Handle("/control/",
-		&AuthHandler{
+		&authHandler{
 			Next:  http.StripPrefix("/control/", http.FileServer(http.Dir("./static"))),
 			Users: s.Users,
 		},
 	)
 
-	http.Handle("/control/meta", &AuthHandler{
+	http.Handle("/control/meta", &authHandler{
 		Next: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			json, err := json.Marshal(s.MetaGroups)
 			if err != nil {
@@ -42,11 +42,16 @@ func (s *Server) Start() {
 		Users: s.Users,
 	})
 
-	http.Handle("/control/user", &AuthHandler{
+	http.Handle("/control/user", &authHandler{
 		Next: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			u, _, _ := r.BasicAuth()
 			fmt.Fprint(w, u)
 		}),
+		Users: s.Users,
+	})
+
+	http.Handle("/control/take", &authHandler{
+		Next:  http.HandlerFunc(HandleMCRConnectionRequest),
 		Users: s.Users,
 	})
 

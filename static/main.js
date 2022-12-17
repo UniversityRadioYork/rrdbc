@@ -14,27 +14,52 @@ const setStatus = (text) => {
     }, 5000)
 }
 
-let selectedSource = null;
-let sourceButtons = Array.from(document.getElementsByClassName("button-source"));
-
-sourceButtons.forEach((e) => {
-    e.onclick = () => {
-        selectedSource = e;
-        sourceButtons.forEach((b) => {
-            b.style.border = "";
-        })
-        e.style.border = "5px solid red";
-    }
-})
-
-let destinationButtons = Array.from(document.getElementsByClassName("button-dest"));
 const allowedCombinations = {
     "audio-source-int-ext": "audio-dest-int-ext",
     "audio-source-ext-main": "audio-dest-ext-main",
     "button-meta-source": "button-meta-dest"
 }
+
+let selectedSource = null;
+let selectedSourceType = "";
+let selectedMetaGroup = 0;
+
 let connections = {};
 let undoConnections = {};
+
+let sourceButtons = Array.from(document.getElementsByClassName("button-source"));
+let audioSourceButtons = Array.from(document.getElementsByClassName("button-audio-source"));
+let metaSourceButtons = Array.from(document.getElementsByClassName("button-meta-source"));
+let destinationButtons = Array.from(document.getElementsByClassName("button-dest"));
+
+const getMetaBtnId = (btn) => {
+    if (btn.id.startsWith("metabtn-")) {
+        return Number(btn.id.split("-")[1]);
+    }
+
+    return -1;
+}
+
+const sourceOnClick = (button, type) => {
+    selectedSource = button;
+    selectedSourceType = type;
+    sourceButtons.forEach((b) => {
+        b.style.border = "";
+    })
+    button.style.border = "5px solid red";
+}
+
+audioSourceButtons.forEach((e) => {
+    e.onclick = () => {
+        sourceOnClick(e, "AUDIO")
+    }
+})
+
+metaSourceButtons.forEach((e) => {
+    e.onclick = () => {
+        sourceOnClick(e, "META");
+    }
+})
 
 destinationButtons.forEach((e) => {
     e.onclick = () => {
@@ -50,19 +75,33 @@ destinationButtons.forEach((e) => {
             }
         }
 
-        connections[e.innerText] = selectedSource.innerText;
+        connections[e.innerText] = {
+            type: selectedSourceType,
+            shortName: selectedSource.innerText,
+            data: selectedSourceType == "META" ? metadataGroups[selectedMetaGroup].Members[getMetaBtnId(selectedSource) - 1].LongName : ""
+        };
 
         document.getElementById("connections").innerHTML = "";
         for (c in connections) {
             let row = document.createElement("li");
-            row.innerText = `${connections[c]} -> ${c}`;
+            row.innerText = `${connections[c].shortName} -> ${c}`;
             document.getElementById("connections").appendChild(row);
         }
     }
 })
 
 document.getElementById("take-button").onclick = () => {
-    // TODO Send the Request
+    fetch("/control/take", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(connections)
+    }).then((r) => r.json()).then((d) => {
+        for (destination in d) {
+            document.getElementById(`dest-connection-${destination.replace(" ", "-")}`).innerText = d[destination];
+        }
+    });
 
     document.getElementById("undo-connections").innerHTML = document.getElementById("connections").innerHTML;
     document.getElementById("connections").innerHTML = "";
@@ -96,6 +135,8 @@ fetch("/control/meta").then((r) => r.json()).then((d) => {
         }
 
         grpBtn.onclick = () => {
+            selectedMetaGroup = i;
+
             for (let j = 0; j < 16; j++) {
                 document.getElementById(`metabtn-${j + 1}`).innerText = metadataGroups[i].Members[j].ShortName;
                 document.getElementById(`metabtn-${j + 1}`).style.visibility = metadataGroups[i].Members[j].ShortName == "" ? "hidden" : "visible";
@@ -113,5 +154,5 @@ fetch("/control/meta").then((r) => r.json()).then((d) => {
 })
 
 fetch("/control/user").then((r) => r.text()).then((d) => {
-    document.getElementById("user").innerText = `MCR User: ${d}`;
+    document.getElementById("user").innerText = `MCR Operator: ${d}`;
 })
