@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/UniversityRadioYork/rrdbc/pkg/metadata"
 )
 
 type Server struct {
@@ -22,6 +24,16 @@ type Server struct {
 }
 
 func (s *Server) Start() {
+
+	http.HandleFunc("/meta", func(w http.ResponseWriter, r *http.Request) {
+		// TODO - cache
+		data, err := json.Marshal(metadata.GetStreamMetadata())
+		if err != nil {
+			// TODO Error
+		}
+		w.Header().Add("Content-Type", "application/json")
+		w.Write(data)
+	})
 
 	http.Handle("/control/",
 		&authHandler{
