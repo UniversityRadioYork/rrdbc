@@ -1,0 +1,237 @@
+<html>
+
+<head>
+    <title>RRDBC</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="header">
+        <h3 class="title-text" id="status"></h3>
+        <h3 class="title-text" id="clock">13:50:00</h3>
+        <h3 class="title-text" id="user"></h3>
+    </div>
+    <div id="cols">
+        <div>
+            <h4 class="title-text">Sources</h4>
+
+            <table>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-int-ext">INT1</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-int-ext">INT2</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-int-ext">INT3</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-int-ext">INT4</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-int-ext">CONT</button>
+                    </td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-int-ext">OFFA</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-ext-main">EXT1</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-ext-main">EXT2</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-ext-main">EXT3</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-ext-main">EXT4</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-ext-main">PRES</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-ext-main">STUD</button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-ext-main">SUST</button>
+                    </td>
+                    <td class="button-td"></td>
+                </tr>
+                <tr>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td">
+                        <button class="button-source button-audio-source audio-source-ext-main">STOP</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-1"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-2"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-3"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-4"></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-5"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-6"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-7"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-8"></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-9"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-10"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-11"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-12"></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-13"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-14"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-15"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-source button-meta-source" id="metabtn-16"></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                    <td class="button-td"></td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-1"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-2"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-3"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-4"></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-5"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-6"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-7"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-8"></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-9"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-10"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-11"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-12"></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-13"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-14"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-15"></button>
+                    </td>
+                    <td class="button-td">
+                        <button class="button-meta-group" id="metagrp-16"></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="take-buttons">
+            <button class="button-take" id="take-button">TAKE</button>
+            <ul id="connections" class="connections-list"></ul>
+            <button class="button-take" id="undo-button">UNDO</button>
+            <ul id="undo-connections" class="connections-list"></ul>
+        </div>
+        <div>
+            <h4 class="title-text">Destinations</h4>
+            <table>
+                {{ range .Destinations }}
+                <tr>
+                    {{ range . }}
+                    <td class="button-td">
+                        {{ if .ID }}
+                        <button class="button-dest" id="{{.ID}}">{{.Name}}</button>
+                        <p class="dest-link" id="dest-connection-{{.ID}}">----</p>
+                        {{ end }}
+                    </td>
+                    {{ end }}
+                </tr>
+                {{ end }}
+            </table>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

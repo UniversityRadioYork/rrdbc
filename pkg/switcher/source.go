@@ -1,14 +1,24 @@
 package switcher
 
-type sourceType string
+type Source interface {
+	GetName() string
+	GetGroups() map[string]bool
+}
 
-const (
-	AudioSourceType sourceType = "AUDIO"
-	MetaSourceType  sourceType = "META"
-)
+type BaseSource struct {
+	Name   string
+	Groups map[string]bool
+}
 
-type Source struct {
-	Type      sourceType `json:"type"`
-	ShortName string     `json:"shortName"`
-	Data      string     `json:"data"`
+func (b *BaseSource) GetName() string {
+	return b.Name
+}
+
+func (b *BaseSource) GetGroups() map[string]bool {
+	return b.Groups
+}
+
+type MetaSource struct {
+	BaseSource
+	Data string
 }

@@ -1,12 +1,15 @@
 package metadata
 
-import "github.com/UniversityRadioYork/rrdbc/pkg/switcher"
+import (
+	"github.com/UniversityRadioYork/rrdbc/pkg/switcher"
+	"github.com/google/uuid"
+)
 
-func GetStreamMetadata() map[string]string {
+func GetStreamMetadata(destinations map[uuid.UUID]switcher.Destination) map[string]string {
 	meta := make(map[string]string)
-	for dest, data := range switcher.Destinations {
-		if data.DestType == switcher.MetaStreamDestination {
-			meta[dest] = data.Source.Data
+	for _, dest := range destinations {
+		if _, ok := dest.(*switcher.StreamMetaDest); ok {
+			meta[dest.GetName()] = dest.GetSource().(*switcher.MetaSource).Data
 		}
 	}
 

@@ -70,12 +70,8 @@ button {
     margin: 0;
 }
 
-.button-audio-dest {
+.button-dest {
     background-color: #38761d;
-}
-
-.button-meta-dest {
-    background-color: #93c47d;
 }
 
 .button-take {

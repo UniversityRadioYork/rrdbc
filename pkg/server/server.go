@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/UniversityRadioYork/rrdbc/pkg/metadata"
+	"github.com/UniversityRadioYork/rrdbc/pkg/panel"
 )
 
 type Server struct {
@@ -21,13 +22,14 @@ type Server struct {
 		Password string
 		Admin    bool
 	}
+	Panel panel.MCRPanel
 }
 
 func (s *Server) Start() {
 
 	http.HandleFunc("/meta", func(w http.ResponseWriter, r *http.Request) {
 		// TODO - cache
-		data, err := json.Marshal(metadata.GetStreamMetadata())
+		data, err := json.Marshal(metadata.GetStreamMetadata(s.Panel.SourcesAndDestinations.Destinations))
 		if err != nil {
 			// TODO Error
 		}
@@ -37,7 +39,27 @@ func (s *Server) Start() {
 
 	http.Handle("/control/",
 		&authHandler{
-			Next:  http.StripPrefix("/control/", http.FileServer(http.Dir("./static"))),
+			Next: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				s.Panel.RenderTemplate(w, "templates/index.html")
+			}),
+			Users: s.Users,
+		},
+	)
+
+	http.Handle("/control/main.js",
+		&authHandler{
+			Next: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				s.Panel.RenderTemplate(w, "templates/main.js")
+			}),
+			Users: s.Users,
+		},
+	)
+
+	http.Handle("/control/styles.css",
+		&authHandler{
+			Next: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				http.ServeFile(w, r, "static/styles.css")
+			}),
 			Users: s.Users,
 		},
 	)
@@ -63,7 +85,7 @@ func (s *Server) Start() {
 	})
 
 	http.Handle("/control/take", &authHandler{
-		Next:  http.HandlerFunc(HandleMCRConnectionRequest),
+		Next:  http.HandlerFunc(s.HandleMCRConnectionRequest),
 		Users: s.Users,
 	})
 
