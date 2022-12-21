@@ -1,16 +1,31 @@
 package switcher
 
+// Destination represents the 'right hand side' of a connection, i.e. where
+// a source can be sent to. A destination can only have one source linked
+// to it at a time.
 type Destination interface {
+	// GetName returns the destination name, displayed in the interface
 	GetName() string
+
+	// GetGroups returns the group names defined for the destination
+	// Groups are used to define valid connections from sources
 	GetGroups() map[string]bool
+
+	// GetSource will return the currently connected source
 	GetSource() Source
-	SetSource(s Source) error
+
+	// setSource will attempt to connect the given Source to this
+	// destination. It may not be valid (in terms of types rather
+	// than groups), so it may return an error
+	setSource(s Source) error
 }
 
 type BaseDestination struct {
+	// Name is typically a short string in capitals to represent
+	// the destination, i.e. in the interface
 	Name   string
 	Groups map[string]bool
-	Source Source
+	source Source
 }
 
 func (b *BaseDestination) GetName() string {
@@ -22,45 +37,57 @@ func (b *BaseDestination) GetGroups() map[string]bool {
 }
 
 func (b *BaseDestination) GetSource() Source {
-	return b.Source
+	return b.source
 }
 
+// StreamMetaDest represents a 'live' placeholder for metadata
+// provided from a metadata source. These 'live' metadata
+// dsetinations are available to be picked up by the metadata API
 type StreamMetaDest struct {
 	BaseDestination
 }
 
-func (s *StreamMetaDest) SetSource(source Source) error {
-	// TODO Source Type Checking
-	s.Source = source
+func (s *StreamMetaDest) setSource(source Source) error {
+	if _, ok := source.(*MetaSource); !ok {
+		return ErrCantCreateConnection
+	}
+
+	s.source = source
 	return nil
 }
 
+// StreamDest TODO comment
 type StreamDest struct {
 	BaseDestination
 }
 
-func (s *StreamDest) SetSource(source Source) error {
+func (s *StreamDest) setSource(source Source) error {
 	// TODO Source Type Checking
-	s.Source = source
+	s.source = source
 	return nil
 }
 
+// RecorderDest TODO comment
 type RecorderDest struct {
 	BaseDestination
 }
 
-func (r *RecorderDest) SetSource(source Source) error {
+func (r *RecorderDest) setSource(source Source) error {
 	// TODO Source Type Checking
-	r.Source = source
+	r.source = source
 	return nil
 }
 
+// RecorderMetaDest TODO comment
 type RecorderMetaDest struct {
 	BaseDestination
 }
 
-func (r *RecorderMetaDest) SetSource(source Source) error {
-	// TODO Source Type Checking
-	r.Source = source
+func (r *RecorderMetaDest) setSource(source Source) error {
+	if _, ok := source.(*MetaSource); !ok {
+		return ErrCantCreateConnection
+	}
+
+	r.source = source
 	return nil
 }

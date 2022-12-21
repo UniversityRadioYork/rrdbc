@@ -11,7 +11,7 @@ type MCRPanel struct {
 	SourcesWidth      int
 	DestinationsWidth int
 
-	SourcesAndDestinations switcher.SourcesAndDestinations
+	Switcher switcher.Switcher
 
 	SourceGrid      [][]string
 	DestinationGrid [][]string
@@ -22,7 +22,7 @@ type RenderButton struct {
 	Name string
 }
 
-func (p *MCRPanel) CreateSourceButtonGrid() [][]RenderButton {
+func (p *MCRPanel) createSourceButtonGrid() [][]RenderButton {
 	rows := [][]RenderButton{}
 
 	for _, row := range p.SourceGrid {
@@ -32,7 +32,7 @@ func (p *MCRPanel) CreateSourceButtonGrid() [][]RenderButton {
 				buttonRow = append(buttonRow, RenderButton{"", ""})
 			}
 
-			for id, s := range p.SourcesAndDestinations.Sources {
+			for id, s := range p.Switcher.Sources {
 				if s.GetName() == source {
 					buttonRow = append(buttonRow, RenderButton{id.String(), s.GetName()})
 					break
@@ -45,7 +45,7 @@ func (p *MCRPanel) CreateSourceButtonGrid() [][]RenderButton {
 	return rows
 }
 
-func (p *MCRPanel) CreateDestinationButtonGrid() [][]RenderButton {
+func (p *MCRPanel) createDestinationButtonGrid() [][]RenderButton {
 	rows := [][]RenderButton{}
 
 	for _, row := range p.DestinationGrid {
@@ -56,7 +56,7 @@ func (p *MCRPanel) CreateDestinationButtonGrid() [][]RenderButton {
 				continue
 			}
 
-			for id, d := range p.SourcesAndDestinations.Destinations {
+			for id, d := range p.Switcher.Destinations {
 				if d.GetName() == dest {
 					buttonRow = append(buttonRow, RenderButton{id.String(), d.GetName()})
 					break
@@ -79,8 +79,8 @@ func (p *MCRPanel) RenderTemplate(w http.ResponseWriter, tmpltFile string) {
 		Sources      [][]RenderButton
 		Destinations [][]RenderButton
 	}{
-		Sources:      p.CreateSourceButtonGrid(),
-		Destinations: p.CreateDestinationButtonGrid(),
+		Sources:      p.createSourceButtonGrid(),
+		Destinations: p.createDestinationButtonGrid(),
 	}); err != nil {
 		// TODO
 		panic(err)

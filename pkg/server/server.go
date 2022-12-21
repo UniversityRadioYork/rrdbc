@@ -29,7 +29,7 @@ func (s *Server) Start() {
 
 	http.HandleFunc("/meta", func(w http.ResponseWriter, r *http.Request) {
 		// TODO - cache
-		data, err := json.Marshal(metadata.GetStreamMetadata(s.Panel.SourcesAndDestinations.Destinations))
+		data, err := json.Marshal(metadata.GetStreamMetadata(s.Panel.Switcher.Destinations))
 		if err != nil {
 			// TODO Error
 		}
@@ -85,7 +85,7 @@ func (s *Server) Start() {
 	})
 
 	http.Handle("/control/take", &authHandler{
-		Next:  http.HandlerFunc(s.HandleMCRConnectionRequest),
+		Next:  http.HandlerFunc(s.handleMCRConnectionRequest),
 		Users: s.Users,
 	})
 

@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (s *Server) HandleMCRConnectionRequest(w http.ResponseWriter, r *http.Request) {
+func (s *Server) handleMCRConnectionRequest(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		// TODO Some Error
 		return
@@ -21,7 +21,7 @@ func (s *Server) HandleMCRConnectionRequest(w http.ResponseWriter, r *http.Reque
 
 	connectedSources := make(map[string]string)
 	for dest, source := range connections {
-		if err := s.Panel.SourcesAndDestinations.MapSourceToDestination(uuid.MustParse(source), uuid.MustParse(dest)); err != nil {
+		if err := s.Panel.Switcher.MapSourceToDestination(uuid.MustParse(source), uuid.MustParse(dest)); err != nil {
 			// TODO Error
 		}
 		connectedSources[dest] = source
