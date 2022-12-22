@@ -66,7 +66,14 @@ func (s *Server) Start() {
 
 	http.Handle("/control/meta", &authHandler{
 		Next: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			json, err := json.Marshal(s.MetaGroups)
+			s.Panel.PopulateSourcePageGroups()
+			json, err := json.Marshal(struct {
+				Sources      map[string]map[string][]*panel.RawSource
+				Destinations map[string]map[string][]string
+			}{
+				Sources:      s.Panel.SourcePages,
+				Destinations: s.Panel.DestinationPages,
+			})
 			if err != nil {
 				// TODO
 			}

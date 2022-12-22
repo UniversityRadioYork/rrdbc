@@ -26,6 +26,18 @@ func (b *BaseSource) GetGroups() map[string]bool {
 	return b.Groups
 }
 
+type AudioStreamSource struct {
+	BaseSource
+}
+
+type AudioFileSource struct {
+	BaseSource
+}
+
+type StopSource struct {
+	BaseSource
+}
+
 // MetaSource represents a source containig textual information
 // for distributing, i.e. as a web-player title, on RDS radiotext or
 // to save next to a recording

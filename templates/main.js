@@ -20,9 +20,8 @@ const allowedCombinations = {
     "button-meta-source": "button-meta-dest"
 }
 
-let selectedSource = null;
-let selectedSourceType = "";
-let selectedMetaGroup = 0;
+let selectedSourceText = "";
+let selectedSourceID = "";
 
 let connections = {};
 let undoConnections = {};
@@ -31,35 +30,6 @@ let sourceButtons = Array.from(document.getElementsByClassName("button-source"))
 let audioSourceButtons = Array.from(document.getElementsByClassName("button-audio-source"));
 let metaSourceButtons = Array.from(document.getElementsByClassName("button-meta-source"));
 let destinationButtons = Array.from(document.getElementsByClassName("button-dest"));
-
-const getMetaBtnId = (btn) => {
-    if (btn.id.startsWith("metabtn-")) {
-        return Number(btn.id.split("-")[1]);
-    }
-
-    return -1;
-}
-
-const sourceOnClick = (button, type) => {
-    selectedSource = button;
-    selectedSourceType = type;
-    sourceButtons.forEach((b) => {
-        b.style.border = "";
-    })
-    button.style.border = "5px solid red";
-}
-
-audioSourceButtons.forEach((e) => {
-    e.onclick = () => {
-        sourceOnClick(e, "AUDIO")
-    }
-})
-
-metaSourceButtons.forEach((e) => {
-    e.onclick = () => {
-        sourceOnClick(e, "META");
-    }
-})
 
 destinationButtons.forEach((e) => {
     e.onclick = () => {
@@ -121,37 +91,46 @@ document.getElementById("undo-button").onclick = () => {
     undoConnections = {};
 }
 
-let metadataGroups = [];
-
+let paginationData = {};
 fetch("/control/meta").then((r) => r.json()).then((d) => {
-    metadataGroups = d;
-    for (let i = 0; i < 16; i++) {
-        let grpBtn = document.getElementById(`metagrp-${i + 1}`);
-        grpBtn.innerText = metadataGroups[i].GrpName;
-
-        if (metadataGroups[i].GrpName == "") {
-            grpBtn.style.visibility = "hidden";
-            continue;
-        }
-
-        grpBtn.onclick = () => {
-            selectedMetaGroup = i;
-
-            for (let j = 0; j < 16; j++) {
-                document.getElementById(`metabtn-${j + 1}`).innerText = metadataGroups[i].Members[j].ShortName;
-                document.getElementById(`metabtn-${j + 1}`).style.visibility = metadataGroups[i].Members[j].ShortName == "" ? "hidden" : "visible";
-            }
-            Array.from(document.getElementsByClassName("button-meta-source")).forEach((b) => {
-                b.style.border = "";
-            })
-            Array.from(document.getElementsByClassName("button-meta-group")).forEach((b) => {
-                b.style.border = "";
-            })
-            grpBtn.style.border = "5px solid red";
-        }
-
-    }
+    paginationData = d;
 })
+
+{{ range .Sources }}
+    {{ range . }}
+        {{ if and (.ID) (not (eq .ButtonType "POSTPAGE")) }}
+            {{ if eq .ButtonType "RAW"}}
+                document.getElementById("{{.ID}}").onclick = () => {
+                    selectedSourceText = "{{.Name}}";
+                    selectedSourceID = "{{.ID}}";
+                    sourceButtons.forEach((b) => {
+                        b.style.border = "";
+                    })
+                    document.getElementById("{{.ID}}").style.border = "5px solid red";
+                }
+            {{ else if eq .ButtonType "PAGE"}}
+                document.getElementById("{{.ID}}").onclick = () => {
+                    let pageData = paginationData.Sources["{{.PageGroup}}"]["{{.Name}}"];
+
+                    for (let i = 0; i < pageData.length; i++) {
+                        let button = document.getElementById(`{{.PageGroup}}-${i+1}`);
+                        button.innerText = pageData[i].Name;
+                        button.style.visibility = pageData.length > [i] == "" ? "hidden": "visible";
+                        button.onclick = () => {
+                            selectedSourceText = pageData[i].Name;
+                            selectedSourceID = pageData[i].ID;
+                            sourceButtons.forEach((b) => {
+                                b.style.border = "";
+                            })
+                            button.style.border = "5px solid red";      
+                        };
+                    }
+                }
+            {{ end }}
+
+        {{ end }}
+    {{ end }}
+{{ end }}
 
 fetch("/control/user").then((r) => r.text()).then((d) => {
     document.getElementById("user").innerText = `MCR Operator: ${d}`;

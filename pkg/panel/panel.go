@@ -5,44 +5,80 @@ import (
 	"text/template"
 
 	"github.com/UniversityRadioYork/rrdbc/pkg/switcher"
+	"github.com/google/uuid"
 )
 
+type ButtonType string
+
+const (
+	RawButtonType      ButtonType = "RAW"
+	PostPageButtonType ButtonType = "POSTPAGE"
+	PageButtonType     ButtonType = "PAGE"
+)
+
+type RenderButton struct {
+	ID string
+
+	Name       string
+	ButtonType ButtonType
+
+	PageGroup string
+}
+
+type RawSource struct {
+	Name string
+	ID   string
+}
 type MCRPanel struct {
 	SourcesWidth      int
 	DestinationsWidth int
 
 	Switcher switcher.Switcher
 
-	SourceGrid      [][]string
+	SourcePages      map[string]map[string][]*RawSource
+	DestinationPages map[string]map[string][]string
+
+	SourceGrid      [][]*RenderButton
 	DestinationGrid [][]string
 }
 
-type RenderButton struct {
-	ID   string
-	Name string
-}
-
-func (p *MCRPanel) createSourceButtonGrid() [][]RenderButton {
-	rows := [][]RenderButton{}
-
+func (p *MCRPanel) populateSourceButtonGrid() {
 	for _, row := range p.SourceGrid {
-		buttonRow := []RenderButton{}
 		for _, source := range row {
-			if source == "" {
-				buttonRow = append(buttonRow, RenderButton{"", ""})
+			if source.ID != "" {
+				continue
 			}
 
-			for id, s := range p.Switcher.Sources {
-				if s.GetName() == source {
-					buttonRow = append(buttonRow, RenderButton{id.String(), s.GetName()})
-					break
+			switch source.ButtonType {
+			case RawButtonType:
+				for id, s := range p.Switcher.Sources {
+					if s.GetName() == source.Name {
+						source.ID = id.String()
+					}
+				}
+
+			case PageButtonType:
+				source.ID = uuid.NewString()
+
+			case PostPageButtonType:
+				source.ID = source.PageGroup + "-" + source.Name
+			}
+		}
+	}
+}
+
+func (p *MCRPanel) PopulateSourcePageGroups() {
+	for _, pages := range p.SourcePages {
+		for pageName, sources := range pages {
+			for _, source := range sources {
+				for id, s := range p.Switcher.Sources {
+					if s.GetName() == pageName+"-"+source.Name {
+						source.ID = id.String()
+					}
 				}
 			}
 		}
-		rows = append(rows, buttonRow)
 	}
-
-	return rows
 }
 
 func (p *MCRPanel) createDestinationButtonGrid() [][]RenderButton {
@@ -52,13 +88,13 @@ func (p *MCRPanel) createDestinationButtonGrid() [][]RenderButton {
 		buttonRow := []RenderButton{}
 		for _, dest := range row {
 			if dest == "" {
-				buttonRow = append(buttonRow, RenderButton{"", ""})
+				buttonRow = append(buttonRow, RenderButton{"", "", RawButtonType, ""})
 				continue
 			}
 
 			for id, d := range p.Switcher.Destinations {
 				if d.GetName() == dest {
-					buttonRow = append(buttonRow, RenderButton{id.String(), d.GetName()})
+					buttonRow = append(buttonRow, RenderButton{id.String(), d.GetName(), RawButtonType, ""})
 					break
 				}
 			}
@@ -71,15 +107,17 @@ func (p *MCRPanel) createDestinationButtonGrid() [][]RenderButton {
 
 func (p *MCRPanel) RenderTemplate(w http.ResponseWriter, tmpltFile string) {
 	tmplt, err := template.ParseFiles(tmpltFile)
+	p.populateSourceButtonGrid()
+
 	if err != nil {
 		// TODO
 		panic(err)
 	}
 	if err := tmplt.Execute(w, struct {
-		Sources      [][]RenderButton
+		Sources      [][]*RenderButton
 		Destinations [][]RenderButton
 	}{
-		Sources:      p.createSourceButtonGrid(),
+		Sources:      p.SourceGrid,
 		Destinations: p.createDestinationButtonGrid(),
 	}); err != nil {
 		// TODO
