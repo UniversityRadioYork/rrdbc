@@ -42,7 +42,21 @@ type MCRPanel struct {
 	DestinationGrid [][]string
 }
 
-func (p *MCRPanel) populateSourceButtonGrid() {
+func (p *MCRPanel) Populate() {
+	// Source Pages
+	for _, pages := range p.SourcePages {
+		for pageName, sources := range pages {
+			for _, source := range sources {
+				for id, s := range p.Switcher.Sources {
+					if s.GetName() == pageName+"-"+source.Name {
+						source.ID = id.String()
+					}
+				}
+			}
+		}
+	}
+
+	// Source Button Grid Layout
 	for _, row := range p.SourceGrid {
 		for _, source := range row {
 			if source.ID != "" {
@@ -62,20 +76,6 @@ func (p *MCRPanel) populateSourceButtonGrid() {
 
 			case PostPageButtonType:
 				source.ID = source.PageGroup + "-" + source.Name
-			}
-		}
-	}
-}
-
-func (p *MCRPanel) PopulateSourcePageGroups() {
-	for _, pages := range p.SourcePages {
-		for pageName, sources := range pages {
-			for _, source := range sources {
-				for id, s := range p.Switcher.Sources {
-					if s.GetName() == pageName+"-"+source.Name {
-						source.ID = id.String()
-					}
-				}
 			}
 		}
 	}
@@ -107,7 +107,6 @@ func (p *MCRPanel) createDestinationButtonGrid() [][]RenderButton {
 
 func (p *MCRPanel) RenderTemplate(w http.ResponseWriter, tmpltFile string) {
 	tmplt, err := template.ParseFiles(tmpltFile)
-	p.populateSourceButtonGrid()
 
 	if err != nil {
 		// TODO

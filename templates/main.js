@@ -92,8 +92,10 @@ document.getElementById("undo-button").onclick = () => {
 }
 
 let paginationData = {};
-fetch("/control/meta").then((r) => r.json()).then((d) => {
-    paginationData = d;
+fetch("/control/panel").then((r) => r.json()).then((d) => {
+    let panelData = d;
+
+    console.log(d);
 })
 
 {{ range .Sources }}

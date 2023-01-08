@@ -27,6 +27,8 @@ type Server struct {
 
 func (s *Server) Start() {
 
+	s.Panel.Populate()
+
 	http.HandleFunc("/meta", func(w http.ResponseWriter, r *http.Request) {
 		// TODO - cache
 		data, err := json.Marshal(metadata.GetStreamMetadata(s.Panel.Switcher.Destinations))
@@ -64,15 +66,18 @@ func (s *Server) Start() {
 		},
 	)
 
-	http.Handle("/control/meta", &authHandler{
+	http.Handle("/control/panel", &authHandler{
 		Next: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			s.Panel.PopulateSourcePageGroups()
 			json, err := json.Marshal(struct {
-				Sources      map[string]map[string][]*panel.RawSource
+				SourcePages  map[string]map[string][]*panel.RawSource
 				Destinations map[string]map[string][]string
+
+				SourceLayout [][]*panel.RenderButton
 			}{
-				Sources:      s.Panel.SourcePages,
+				SourcePages:  s.Panel.SourcePages,
 				Destinations: s.Panel.DestinationPages,
+
+				SourceLayout: s.Panel.SourceGrid,
 			})
 			if err != nil {
 				// TODO
